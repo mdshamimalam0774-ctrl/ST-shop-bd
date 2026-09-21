@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ST Shop BD - Affiliate Store</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; text-align: center; }
+        
+        /* টপ হেডার ও লোগো বার */
+        .top-bar { background: #333; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo-img { height: 45px; border-radius: 50%; }
+        .login-btn { background: #ff5722; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
+        /* ব্যানার স্লাইডার স্টাইল */
+        .slider-container { position: relative; max-width: 1000px; height: 400px; margin: 20px auto; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); background: #ddd; }
+        .slide { display: none; width: 100%; height: 100%; background-size: cover; background-position: center; }
+        .slide.active { display: block; }
+        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: white; padding: 12px 18px; border: none; cursor: pointer; font-size: 20px; border-radius: 50%; transition: 0.3s; }
+        .slider-btn:hover { background: rgba(0,0,0,0.9); }
+        .prev { left: 15px; }
+        .next { right: 15px; }
+
+        /* প্রোডাক্ট সেকশন স্টাইল */
+        .products-section { padding: 30px 20px; }
+        .product-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+        .product-card { background: #fff; border: 1px solid #ddd; border-radius: 8px; width: 250px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .product-card h3 { font-size: 18px; color: #333; margin-bottom: 10px; }
+        .product-card p { color: #ff5722; font-weight: bold; font-size: 16px; }
+        
+        .product-btns { display: flex; justify-content: space-between; margin-top: 15px; }
+        .btn-buy { background: #ff5722; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; text-decoration: none; }
+        .btn-cart { background: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+
+        /* লগইন মডাল স্টাইল */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
+        .modal-content { background-color: #fff; margin: 10% auto; padding: 20px; border-radius: 8px; width: 300px; text-align: left; position: relative; }
+        .modal-content h3 { text-align: center; color: #333; }
+        .modal-content input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        .modal-content button.submit-btn { width: 100%; background: #ff5722; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; margin-top: 10px; font-weight: bold; }
+        .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .close:hover { color: black; }
+
+        /* ফুটার স্টাইল */
+        .footer { margin-top: 40px; background: #222; color: #fff; padding: 25px; }
+        .footer a { color: #00ffcc; text-decoration: none; margin: 0 10px; }
+        .footer p { color: #ccc; margin: 6px 0; }
+    </style>
+</head>
+<body>
+
+    <!-- টপ বার, লোগো ও লগইন অপশন -->
+    <div class="top-bar">
+        <img src="image_4.png" alt="ST Shop BD Logo" class="logo-img">
+        <button class="login-btn" onclick="openLoginModal()">লগইন / সাইন আপ</button>
+    </div>
+
+    <!-- ব্যানার স্লাইডার সেকশন -->
+    <div class="slider-container">
+        <div class="slide active" style="background-image: url('banner1.jpg');"></div>
+        <div class="slide" style="background-image: url('banner2.jpg');"></div>
+        <div class="slide" style="background-image: url('banner3.jpg');"></div>
+        
+        <button class="slider-btn prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="slider-btn next" onclick="changeSlide(1)">&#10095;</button>
+    </div>
+
+    <h1>স্বাগতম ST Shop BD-তে!</h1>
+    <p>আপনার বিশ্বস্ত অনলাইন শপিং গাইড এবং দারাজ অ্যাফিলিয়েট প্রোডাক্ট কালেকশন।</p>
+
+    <!-- পণ্য সেকশন -->
+    <div class="products-section">
+        <h2>জনপ্রিয় পণ্যসমূহ</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <h3>প্রোডাক্ট নাম ১</h3>
+                <p>৳ ১,৫০০</p>
+                <div class="product-btns">
+                    <a href="#" class="btn-buy">Buy Now</a>
+                    <button class="btn-cart" onclick="alert('পণ্যটি কার্টেও যুক্ত হয়েছে!')">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <h3>প্রোডাক্ট নাম ২</h3>
+                <p>৳ ২,৩০০</p>
+                <div class="product-btns">
+                    <a href="#" class="btn-buy">Buy Now</a>
+                    <button class="btn-cart" onclick="alert('পণ্যটি কার্টেও যুক্ত হয়েছে!')">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- লগইন পপআপ ফর্ম -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h3>লগইন / অ্যাকাউন্ট</h3>
+            <form onsubmit="handleLogin(event)">
+                <label>জিমেইল অথবা ফোন নম্বর:</label>
+                <input type="text" id="userEmailOrPhone" placeholder="email@gmail.com বা 017xxxxxxxx" required>
+                
+                <label>পাসওয়ার্ড:</label>
+                <input type="password" id="userPassword" placeholder="পাসওয়ার্ড দিন" required>
+                
+                <button type="submit" class="submit-btn">লগইন করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ফুটার / যোগাযোগ সেকশন -->
+    <div class="footer">
+        <h3>যোগাযোগ করুন</h3>
+        <p>হেল্পলাইন: <strong>01401557774</strong></p>
+        <p>
+            <a href="https://wa.me/8801401557774" target="_blank">💬 WhatsApp এ চ্যাট করুন</a> | 
+            <a href="mailto:mdshamimalam0774@gmail.com">✉️ ইমেইল পাঠান</a>
+        </p>
+        <p>&copy; 2026 ST Shop BD. All rights reserved.</p>
+    </div>
+
+    <!-- জাভাস্ক্রিপ্ট কোড -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function changeSlide(direction) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(() => {
+            changeSlide(1);
+        }, 4000);
+
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            let modal = document.getElementById('loginModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            let identifier = document.getElementById('userEmailOrPhone').value;
+            alert('ধন্যবাদ! ' + identifier + ' দিয়ে লগইন চেষ্টার তথ্য গ্রহণ করা হয়েছে।');
+            closeLoginModal();
+        }
+    </script>
+</body>
+</html>
